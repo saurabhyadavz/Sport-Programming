@@ -1,3 +1,5 @@
+// Question link: https://www.spoj.com/problems/tag/datastructures
+
 #include<bits/stdc++.h>
 using namespace std;
 
