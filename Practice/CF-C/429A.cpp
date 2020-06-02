@@ -4,7 +4,7 @@
 ------------------------
 */
 
-// https://codeforces.com/contest/401/problem/C
+// https://codeforces.com/contest/429/problem/A
 
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -54,44 +54,11 @@ struct custom_hash {
 #define MAX 10000000000000
 
 
-int32_t main()
-{
-	REDBULL
-	int n;
-	cin >> n;
-	set<int> set;
-	int a = 0, b = 0 , sum = MAX;
-
-	for (int i = 0; i <= n; i++)
-	{
-		int check = n - 7 * i;
-		if (check < 0)
-			break;
-		if (check % 4 == 0)
-		{
-			if ((check / 4) + i <= (sum))
-			{
-				sum = check / 4 + i;
-				a = check / 4;
-				b = i;
-			}
-
-		}
-
-	}
-	string s;
-
-	loop(i, 0, a)
-	s += '4';
-
-	loop(i, 0, b)
-	s += '7';
-	if (s.size() == 0)
-		cout << -1 << endl;
-	else
-		cout << s << endl;
+/*
 
 
 
-	return 0;
-}
+Not solved
+
+
+*/
