@@ -61,15 +61,22 @@ int32_t main()
 
 	int n;
 	cin >> n;
-	int sum1 = (n * (n + 1)) / 2;
-	int sum2 = 0;
-	loop(i, 0, n - 1)
+	cout << n << " ";
+	while (n != 1)
 	{
-		int in;
-		cin >> in;
-		sum2 += in;
+		if (n % 2 == 0)
+		{
+			n /= 2;
+			cout << n << " ";
+		}
+		else {
+			n *= 3;
+			n += 1;
+			cout << n << " ";
+		}
 	}
-	cout << sum1 - sum2 << endl;
+
+
 
 	return 0;
 }
