@@ -1,101 +1,58 @@
-/*
-𝓐𝓾𝓽𝓱𝓸𝓻:-
-𝓢𝓪𝓾𝓻𝓪𝓫𝓱𝓼𝓱𝓪𝓭𝓸𝔀
-------------------------
-*/
-#include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
+// C++ program to generate short url from integer id and
+// integer id back from short url.
+#include<bits/stdc++.h>
 using namespace std;
 
-#define loop(i,a,b) for(int i=a;i<b;i++)
-#define loopb(i,a,b) for(int i=a;i>=b;i--)
-#define fore(name)  for(auto it=name.begin();it!=name.end();it++)
-#define w  int t;cin>>t;while(t--)
-#define pb(x) push_back(x)
-#define in(y) insert(y)
-#define bitscount 32
-#define make(x,y) make_pair(x,y)
-#define LOAD_FACTOR_set(name) name.reserve(32768);name.max_load_factor(0.25);
-#define LOAD_FACTOR_map(name) name.reserve(1024);name.max_load_factor(0.25);
-#define lcm(a,b) ((a*b))/(__gcd(a,b))
-#define int long long int
-#define REDBULL ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define mod 1000000007
-#define endl "\n"
-#define all(x) (x).begin(), (x).end()
-
-
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
-#define ordered_justset tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
-
-struct HASH {
-  size_t operator()(const pair<int, int>&x)const {
-    return ((int)x.first) ^ (((int)x.second) << 32);
-  }
-};
-struct custom_hash {
-  static uint64_t splitmix64(uint64_t x) {
-    x += 0x9e3779b97f4a7c15;
-    x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
-    x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
-    return x ^ (x >> 31);
-  }
-
-  size_t operator()(uint64_t x) const {
-    static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-    return splitmix64(x + FIXED_RANDOM);
-  }
-};
-typedef pair<int, int> pi;
-#define UNMAP(name) unordered_map<int,int,custom_hash> name
-#define MAX 10000000000000
-
-void solve()
+// Function to generate a short url from integer ID
+string idToShortURL(long int n)
 {
-  vector<int> ans(2000001), node(2000001);
-  fill(all(ans), 0);
-  fill(all(node), 0);
-  for (int i = 0; i < 3; i++)
-  {
-    ans[i] = 0;
-    node[i] = 0;
-  }
-  ans[3] = 4;
-  node[3] = 1;
+	// Map to store 62 possible characters
+	char map[] = "abcdefghijklmnopqrstuvwxyzABCDEF"
+	             "GHIJKLMNOPQRSTUVWXYZ0123456789";
 
-  for (int i = 4; i <= 2000000; i++)
-  {
-    int check = (ans[i - 1]) % mod;
-    check = (check % mod + (2 % mod * ans[i - 2] % mod) % mod) % mod;
-    ans[i] = check;
-    if (!node[i - 1] && !node[i - 2])
-    {
-      node[i] = (1);
-      ans[i] = (ans[i] + 4) % mod;
-    }
-    else
-      node[i] = 0;
+	string shorturl;
 
-  }
+	// Convert given integer id to a base 62 number
+	while (n)
+	{
+		// use above map to store actual character
+		// in short url
+		cout << n % 62 << endl;
+		shorturl.push_back(map[n % 62]);
+		n = n / 62;
+		cout << n << endl;
+	}
 
-  w{
-    int n;
-    cin >> n;
-    cout << ans[n] << endl;
-  }
+	// Reverse shortURL to complete base conversion
+	reverse(shorturl.begin(), shorturl.end());
 
-
-
-
-
+	return shorturl;
 }
-int32_t main()
+
+// Function to get integer ID back from a short url
+long int shortURLtoID(string shortURL)
 {
-  REDBULL
+	long int id = 0; // initialize result
 
-  solve();
+	// A simple base conversion logic
+	for (int i = 0; i < shortURL.length(); i++)
+	{
+		if ('a' <= shortURL[i] && shortURL[i] <= 'z')
+			id = id * 62 + shortURL[i] - 'a';
+		if ('A' <= shortURL[i] && shortURL[i] <= 'Z')
+			id = id * 62 + shortURL[i] - 'A' + 26;
+		if ('0' <= shortURL[i] && shortURL[i] <= '9')
+			id = id * 62 + shortURL[i] - '0' + 52;
+	}
+	return id;
+}
 
-  return 0;
+// Driver program to test above function
+int main()
+{
+	int n = 12345;
+	string shorturl = idToShortURL(n);
+	cout << "Generated short url is " << shorturl << endl;
+	cout << "Id from url is " << shortURLtoID(shorturl);
+	return 0;
 }
